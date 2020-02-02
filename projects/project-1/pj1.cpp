@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
   buff[0] = atoi(argv[1]);
   buff[1] = atoi(argv[2]);
   MPI_Bcast(&buff, 2, MPI_INT, 0, MPI_COMM_WORLD);
-  int n = atoi(argv[1]);
-  long int seed = atoi(argv[2]);
+  int n = buff[0];
+  long int seed = buff[1];
 
   //start a timer
   double time_start = MPI_Wtime();
@@ -47,8 +47,11 @@ int main(int argc, char *argv[]) {
   // add local sum
   double local_sum = 0;
   srand48(proc_id + seed);
+  printf(" seed:%li \n",proc_id + seed);
   for (int i = 0; i < local_nums; i++){
-    local_sum += drand48();
+    double temnp = drand48();
+    local_sum += temnp;
+    //printf("%f\n",temnp);
   }
 
   //send or receive
